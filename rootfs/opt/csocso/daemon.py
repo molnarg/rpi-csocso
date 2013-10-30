@@ -1,7 +1,8 @@
-import SL030
+from SL030 import SL030, open_gpio
 import time
 import config
 import urllib
+import datetime
 
 
 def play(gpio, pattern):
@@ -20,19 +21,20 @@ def play(gpio, pattern):
             fd.write('1' if on else '0')
         previous = pattern[i]
 
-buzzer = SL030.open_gpio(18, 'out')
+buzzer = open_gpio(18, 'out')
 success_pattern = [0, config.magnet_duration]
 failure_pattern = [0, 0.1, 0.2, 0.3, 0.4, 0.5]
 
-magnet = SL030.open_gpio(11, 'out')
+magnet = open_gpio(11, 'out')
 
-reader = SL030.SL030(1, 0x50, 4, None)
+reader = SL030(1, 0x50, 4, None)
 
 while True:
     card = reader.poll()
     if card:
+        timestamp = str(datetime.datetime.now())
         card_no = card[1].encode('hex_codec')
-        print 'Card: %s' % card_no
+        print '%s - Card: %s' % (timestamp, card_no)
 
         # Accept or reject
         if True:
@@ -45,5 +47,5 @@ while True:
         try:
             urllib.urlopen(log_url)
         except Exception as e:
-            print e
-            print 'Could not send HTTP request to %s' % log_url
+            print '%s - Could not send HTTP request to %s (%s)' % \
+                  (timestamp, log_url, str(e))
