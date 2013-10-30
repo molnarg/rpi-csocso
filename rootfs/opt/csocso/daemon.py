@@ -3,6 +3,7 @@ import time
 import config
 import urllib
 import datetime
+import sys
 
 
 def play(gpio, pattern):
@@ -49,3 +50,5 @@ while True:
         except Exception as e:
             print '%s - Could not send HTTP request to %s (%s)' % \
                   (timestamp, log_url, str(e))
+
+        sys.stdout.flush()
