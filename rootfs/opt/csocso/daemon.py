@@ -28,6 +28,8 @@ magnet = SL030.open_gpio(11, 'out')
 reader = SL030.SL030(1, 0x50, 4, None)
 
 while True:
-    print map(ord, reader.poll()[1])
-    play([buzzer, magnet], success_pattern)
-    # play(buzzer, failure_pattern)
+    card = reader.poll()
+    if card:
+        print map(ord, reader.poll()[1])
+        play([buzzer, magnet], success_pattern)
+        # play(buzzer, failure_pattern)
