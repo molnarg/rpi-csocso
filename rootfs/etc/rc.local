@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sudo nohup /opt/csocso/run.sh >/dev/null &
+
+exit 0
