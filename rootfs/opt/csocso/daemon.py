@@ -1,5 +1,6 @@
 import SL030
 import time
+import config
 
 
 def play(gpio, pattern):
@@ -19,7 +20,7 @@ def play(gpio, pattern):
         previous = pattern[i]
 
 buzzer = SL030.open_gpio(18, 'out')
-success_pattern = [0, 3]
+success_pattern = [0, config.magnet_duration]
 #failure_pattern = [0, 0.1, 0.2, 0.3, 0.4, 0.5]
 
 magnet = SL030.open_gpio(11, 'out')
